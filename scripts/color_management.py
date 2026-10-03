@@ -94,7 +94,7 @@ def validate_review_evidence(color, review):
 def engine():
     version = subprocess.check_output(['ffmpeg', '-version'], text=True).splitlines()[0]
     options = subprocess.check_output(['ffmpeg', '-hide_banner', '-h', 'filter=scale'], text=True)
-    match = re.search(r'ffmpeg version (\d+)', version)
+    match = re.search(r'ffmpeg version n?(\d+)', version)
     if not match or int(match[1]) < 9 or not all(x in options for x in ('in_transfer', 'out_primaries', 'perceptual tone mapping')):
         raise ValueError('Color conversion needs FFmpeg 9+ with libswscale color mapping. Install a capable build; HDR cannot be imported by changing tags.')
     return dict(policy=POLICY, engine='libswscale-perceptual', ffmpeg=version,
